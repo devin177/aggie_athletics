@@ -1,13 +1,12 @@
 const express = require('express');
 const axios = require("axios");
 const functions = require('firebase-functions');
-require('dotenv').config();
 
 const app = express();
 const port = 3000;
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
+// const CLIENT_ID = process.env.CLIENT_ID;
+// const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const cas_domain = "https://cas.ucdavis.edu/cas";
 const app_url = "https%3A%2F%2Fwwww.aggierewards.com";
 
@@ -21,7 +20,7 @@ app.get('/api/bing', (req, res) => {
   res.json({bong: "bong"});
 });
 
-
+/*
 // Endpoint for Aggie Rewards Client to be redirected to a CAS login page
 app.get('/auth/login', (req, res) => {
   // apply client id and password to link to redirect
@@ -56,5 +55,5 @@ app.get('/auth/validate', (req, res) => {
 app.listen(port, () => {
   console.log(`Aggie Rewards listening on port ${port}`)
 });
-
+*/
 exports.app = functions.https.onRequest(app);
