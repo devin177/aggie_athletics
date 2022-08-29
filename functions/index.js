@@ -8,15 +8,15 @@ app.use(cors);
 // const CLIENT_ID = process.env.CLIENT_ID;
 // const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const cas_domain = "https://cas.ucdavis.edu/cas";
-const app_url = "https%3A%2F%2Fwwww.aggierewards.com";
+const app_url = "https%3A%2F%2Fus-central1-aggie-athletics.cloudfunctions.net%2Fapp%2Fauth%2Flogin";
 
 app.get('/auth/login', (req, res) => {
     // apply client id and password to link to redirect
-    // probably in the form of {cas_domain}/login?service={website}
+    // Form of {cas_domain}/login?service={website}
     // ex. {cas_domain}/login?https%3A%2F%2Fshibboleth.ucdavis.edu%2Fidp%2FAuthn%2FExtCas%3Fconversation%3De3s1%26entityId%3Dhttp%3A%2F%2Fucdavis.instructure.com%2Fsaml2
-    let school_canvas = "/login?service=https%3A%2F%2Fshibboleth.ucdavis.edu%2Fidp%2FAuthn%2FExtCas%3Fconversation%3De3s1%26entityId%3Dhttp%3A%2F%2Fucdavis.instructure.com%2Fsaml2";
+    let school_canvas = `/login?service=${app_url}`;
     let url = `${cas_domain}?${school_canvas}`;
-    res.send(url);
+    res.redirect(url);
 });
 
 // Endpoint for Aggie Rewards Client to validate login ticket
@@ -31,6 +31,7 @@ app.get('/auth/validate', (req, res) => {
     }).then((response) => {
       res.redirect('www.google.com'/*"https://www.aggierewards.com/client/userProfile"*/);
     }).catch((error) => {
+      console.log(error);
       res.send("Invalid login");
     })
   
